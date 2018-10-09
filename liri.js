@@ -43,3 +43,31 @@ function concertThis(operand) {
       });
 
 }
+
+function spotifyThis(operand) {
+    console.log(keys.spotify.id);
+    spotify.search({ type: 'track', query: operand }, function(err, data) {
+        if (err) {
+          return console.log('Error occurred: ' + err);
+        }
+    console.log(data.tracks.items[0]);
+    });
+
+//     spotify
+//   .search({ type: 'track', query: 'The sign' })
+//   .then(function(response) {
+//     console.log(response.tracks.items[0]);
+//   })
+//   .catch(function(err) {
+//     console.log(err);
+//   });
+
+//     spotify
+//   .request('https://api.spotify.com/v1/tracks/'+operand)
+//   .then(function(data) {
+//     console.log(data); 
+//   })
+//   .catch(function(err) {
+//     console.error('Error occurred: ' + err); 
+//   });
+}
