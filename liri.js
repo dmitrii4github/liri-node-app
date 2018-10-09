@@ -33,7 +33,7 @@ function concertThis(operand) {
       
           // Parse the body of the site and recover just the imdbRating
           // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
-          console.log("We received: " + JSON.parse(body).venue[name]);
+          console.log("We received: " + JSON.parse(body)[0].venue.name);
         }
       });
 
