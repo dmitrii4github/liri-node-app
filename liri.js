@@ -50,7 +50,8 @@ function spotifyThis(operand) {
         if (err) {
           return console.log('Error occurred: ' + err);
         }
-    console.log(data.tracks.items[0]);
+    //console.log(data.tracks.items[0]);
+    console.log("Artist(s): " + data.tracks.items[0].artists[0].name);
     });
 
 //     spotify
