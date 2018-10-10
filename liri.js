@@ -8,9 +8,9 @@ var fs = require("fs");
 var spotify = new Spotify(keys.spotify);
 
 var command = process.argv[2];
-console.log(command);
+//console.log(command);
 var operand = process.argv[3];
-console.log(operand);
+//console.log(operand);
 
 executeCommand(command, operand);
 
@@ -36,7 +36,7 @@ function concertThis(operand) {
 }
 
 function spotifyThis(operand) {
-    console.log(keys.spotify.id);
+    //console.log(keys.spotify.id);
     spotify.search({ type: 'track', query: operand }, function(err, data) {
         if (err) {
           return console.log('Error occurred: ' + err);
@@ -87,13 +87,13 @@ function doWhatItSays() {
         }
       
         // We will then print the contents of data
-        console.log(data);
+        //console.log(data);
       
         // Then split it by commas (to make it more readable)
         var dataArr = data.split(",");
       
         // We will then re-display the content as an array for later use.
-        console.log(dataArr);
+        //console.log(dataArr);
 
         executeCommand(dataArr[0], dataArr[1]);
       
