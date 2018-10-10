@@ -9,9 +9,6 @@ var spotify = new Spotify(keys.spotify);
 var command = process.argv[2];
 console.log(command);
 var operand = process.argv[3];
-if (operand == null) {
-    operand = "The Sign";
-}
 console.log(operand);
 
 switch(command) {
@@ -19,9 +16,15 @@ switch(command) {
         concertThis(operand);
         break;
     case "spotify-this-song":
+        if (operand == null) {
+            operand = "The Sign";
+        }
         spotifyThis(operand);
         break;
     case "movie-this":
+        if (operand == null) {
+            operand = "Mr. Nobody";
+        }
         movieThis(operand);
         break;
 }
@@ -59,22 +62,32 @@ function spotifyThis(operand) {
     console.log("Preview URL: " + data.tracks.items[0].preview_url);
     console.log("Album name: " + data.tracks.items[0].album.name);
     });
+}
 
-//     spotify
-//   .search({ type: 'track', query: 'The sign' })
-//   .then(function(response) {
-//     console.log(response.tracks.items[0]);
-//   })
-//   .catch(function(err) {
-//     console.log(err);
-//   });
+function movieThis(operand) {
 
-//     spotify
-//   .request('https://api.spotify.com/v1/tracks/'+operand)
-//   .then(function(data) {
-//     console.log(data); 
-//   })
-//   .catch(function(err) {
-//     console.error('Error occurred: ' + err); 
-//   });
+    var queryURL = "http://www.omdbapi.com/?apikey=trilogy&t=" + operand;
+
+    request(queryURL, function(error, response, body) {
+
+        // If the request is successful (i.e. if the response status code is 200)
+        if (!error && response.statusCode === 200) {
+      
+          // Parse the body of the site and recover just the imdbRating
+          // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
+          console.log("Movie title: " + JSON.parse(body).Title);
+          console.log("Year it came out: " + JSON.parse(body).Year);
+          console.log("Rating: " + JSON.parse(body).Rated);
+          console.log("Rotten Tomatoes rating: " + JSON.parse(body).Ratings[1].Value);
+          console.log("Country: " + JSON.parse(body).Country);
+          console.log("Language: " + JSON.parse(body).Language);
+          console.log("Plot: " + JSON.parse(body).Plot);
+          console.log("Actors: " + JSON.parse(body).Actors);
+
+        } else {
+            console.log("Error occurred: "+error);
+            console.log("Status code: " + response.statusCode);
+        }
+      });
+
 }
