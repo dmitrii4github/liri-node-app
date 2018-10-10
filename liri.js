@@ -9,6 +9,9 @@ var spotify = new Spotify(keys.spotify);
 var command = process.argv[2];
 console.log(command);
 var operand = process.argv[3];
+if (operand == null) {
+    operand = "The Sign";
+}
 console.log(operand);
 
 switch(command) {
@@ -52,6 +55,9 @@ function spotifyThis(operand) {
         }
     //console.log(data.tracks.items[0]);
     console.log("Artist(s): " + data.tracks.items[0].artists[0].name);
+    console.log("Song name: " + data.tracks.items[0].name);
+    console.log("Preview URL: " + data.tracks.items[0].preview_url);
+    console.log("Album name: " + data.tracks.items[0].album.name);
     });
 
 //     spotify
