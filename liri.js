@@ -3,6 +3,7 @@ var Spotify = require("node-spotify-api");
 var keys = require("./keys.js")
 var request = require("request");
 var moment = require("moment");
+var fs = require("fs");
 
 var spotify = new Spotify(keys.spotify);
 
@@ -11,23 +12,7 @@ console.log(command);
 var operand = process.argv[3];
 console.log(operand);
 
-switch(command) {
-    case "concert-this":
-        concertThis(operand);
-        break;
-    case "spotify-this-song":
-        if (operand == null) {
-            operand = "The Sign";
-        }
-        spotifyThis(operand);
-        break;
-    case "movie-this":
-        if (operand == null) {
-            operand = "Mr. Nobody";
-        }
-        movieThis(operand);
-        break;
-}
+executeCommand(command, operand);
 
 function concertThis(operand) {
 
@@ -43,7 +28,7 @@ function concertThis(operand) {
           console.log("Venue name: " + JSON.parse(body)[0].venue.name);
           console.log("Venue location: " + JSON.parse(body)[0].venue.city + ", " + JSON.parse(body)[0].venue.region + ", " + JSON.parse(body)[0].venue.country);
           var datetime = moment(JSON.parse(body)[0].datetime).format("MM/DD/YYYY");
-          console.log("Venue date: " + datetime);
+          console.log("Concert date: " + datetime);
 
         }
       });
@@ -90,4 +75,54 @@ function movieThis(operand) {
         }
       });
 
+}
+
+function doWhatItSays() {
+
+    fs.readFile("random.txt", "utf8", function(error, data) {
+
+        // If the code experiences any errors it will log the error to the console.
+        if (error) {
+          return console.log(error);
+        }
+      
+        // We will then print the contents of data
+        console.log(data);
+      
+        // Then split it by commas (to make it more readable)
+        var dataArr = data.split(",");
+      
+        // We will then re-display the content as an array for later use.
+        console.log(dataArr);
+
+        executeCommand(dataArr[0], dataArr[1]);
+      
+      });
+      
+    
+
+}
+
+
+function executeCommand(command, operand) {
+    switch(command) {
+        case "concert-this":
+            concertThis(operand);
+            break;
+        case "spotify-this-song":
+            if (operand == null) {
+                operand = "The Sign";
+            }
+            spotifyThis(operand);
+            break;
+        case "movie-this":
+            if (operand == null) {
+                operand = "Mr. Nobody";
+            }
+            movieThis(operand);
+            break;
+        case "do-what-it-says":
+            doWhatItSays();
+            break;
+    }
 }
